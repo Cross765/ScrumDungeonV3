@@ -7,18 +7,21 @@ import { Loader2 } from 'lucide-react';
 import React from 'react';
 
 export default function StoryDisplay({ story }: { story: StorySegment[] }) {
-    const viewportRef = React.useRef<HTMLDivElement>(null);
+    const scrollAreaRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
-        if (viewportRef.current) {
-            viewportRef.current.scrollTo({ top: viewportRef.current.scrollHeight, behavior: 'smooth' });
+        if (scrollAreaRef.current) {
+            const viewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
+            if (viewport) {
+                viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'smooth' });
+            }
         }
     }, [story]);
 
     return (
-        <Card className="shadow-lg">
+        <Card className="shadow-lg min-h-[400px] flex flex-col">
             <CardContent className="p-0 flex-grow">
-                <ScrollArea className="h-full" viewportRef={viewportRef}>
+                <ScrollArea className="h-full" ref={scrollAreaRef}>
                     <div className="p-6 space-y-6">
                         {story.map((segment) => (
                             <div key={segment.id} className="prose prose-invert prose-p:font-body prose-p:text-lg prose-p:leading-relaxed prose-headings:font-headline prose-p:text-foreground/90 max-w-none">
