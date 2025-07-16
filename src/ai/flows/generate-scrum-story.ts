@@ -44,7 +44,7 @@ Decisión del jugador:
 Resultado del dado:
 {{diceRollResult}}
 
-Genera un nuevo capítulo de la historia en español que continúe la narrativa de forma coherente y atractiva, teniendo en cuenta el resultado del dado. Asegúrate de que la historia tenga un inicio y un final definidos a lo largo del juego.`,
+Genera un nuevo capítulo de la historia en español que continúe la narrativa de forma coherente y atractiva, teniendo en cuenta el resultado del dado. La historia debe tener un máximo de 100 palabras. Asegúrate de que la historia tenga un inicio y un final definidos a lo largo del juego.`,
 });
 
 const generateScrumStoryFlow = ai.defineFlow(

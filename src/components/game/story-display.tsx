@@ -16,7 +16,7 @@ export default function StoryDisplay({ story }: { story: StorySegment[] }) {
     }, [story]);
 
     return (
-        <Card className="h-[400px] md:h-[500px] flex flex-col shadow-lg">
+        <Card className="shadow-lg">
             <CardContent className="p-0 flex-grow">
                 <ScrollArea className="h-full" viewportRef={viewportRef}>
                     <div className="p-6 space-y-6">
