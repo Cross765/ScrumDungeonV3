@@ -14,14 +14,14 @@ export default function ActionsPanel({ latestSegment, onDecision }: ActionsPanel
     }
 
     return (
-        <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center items-stretch">
             {latestSegment.options.map((option, index) => (
                 <Button 
                     key={index} 
                     onClick={() => onDecision(option)} 
                     variant="outline"
                     size="lg"
-                    className="font-headline text-base hover:bg-accent hover:text-accent-foreground transition-all duration-300 transform hover:scale-105"
+                    className="font-headline text-base hover:bg-accent hover:text-accent-foreground transition-all duration-300 transform hover:scale-105 whitespace-normal h-auto py-3"
                 >
                     {option}
                 </Button>
