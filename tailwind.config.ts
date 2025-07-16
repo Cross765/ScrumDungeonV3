@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['Inter', 'sans-serif'],
+        body: ['Literata', 'serif'],
+        headline: ['Space Grotesk', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -88,12 +88,21 @@ export default {
             height: '0',
           },
         },
+        'dice-roll': {
+          '0%': { transform: 'rotate(0deg) scale(1)' },
+          '20%': { transform: 'rotate(72deg) scale(1.2)' },
+          '40%': { transform: 'rotate(144deg) scale(1)' },
+          '60%': { transform: 'rotate(216deg) scale(1.2)' },
+          '80%': { transform: 'rotate(288deg) scale(1)' },
+          '100%': { transform: 'rotate(360deg) scale(1.2)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'dice-roll': 'dice-roll 0.5s ease-in-out',
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 } satisfies Config;
