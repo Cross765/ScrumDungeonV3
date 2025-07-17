@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { FormItem, FormLabel } from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
 
 interface LevelUpDialogProps {
     character: Character;
@@ -70,11 +70,11 @@ export default function LevelUpDialog({ character, pointsToDistribute, onLevelUp
                     </div>
                      <div className="grid gap-y-6">
                         {SKILLS.map(skill => (
-                            <FormItem key={skill}>
-                                <FormLabel className="flex justify-between">
+                            <div key={skill} className="space-y-2">
+                                <Label className="flex justify-between">
                                     <span>{skill}</span>
                                     <span className="text-primary font-bold">{currentSkills[skill]}</span>
-                                </FormLabel>
+                                </Label>
                                 <Slider 
                                     min={character.skills[skill]}
                                     max={character.skills[skill] + points + (currentSkills[skill] - character.skills[skill])}
@@ -82,7 +82,7 @@ export default function LevelUpDialog({ character, pointsToDistribute, onLevelUp
                                     value={[currentSkills[skill]]}
                                     onValueChange={(val) => handleSliderChange(skill, val)}
                                 />
-                            </FormItem>
+                            </div>
                         ))}
                     </div>
                 </div>
