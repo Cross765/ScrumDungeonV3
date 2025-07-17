@@ -57,10 +57,17 @@ export default function CharacterCreation({ onCharacterCreate }: CharacterCreati
     }, [selectedRole, skills]);
 
     const handleSliderChange = (skill: SkillName, value: number[]) => {
-        const change = value[0] - skills[skill];
+        const oldValue = skills[skill];
+        const newValue = value[0];
+        const change = newValue - oldValue;
+        
         if (points - change >= 0) {
-            setSkills(prev => ({ ...prev, [skill]: value[0] }));
+            setSkills(prev => ({ ...prev, [skill]: newValue }));
             setPoints(prev => prev - change);
+        } else {
+             const maxPossibleValue = oldValue + points;
+             setSkills(prev => ({...prev, [skill]: maxPossibleValue}));
+             setPoints(0);
         }
     };
     
@@ -156,7 +163,7 @@ export default function CharacterCreation({ onCharacterCreate }: CharacterCreati
                                         <FormControl>
                                             <Slider 
                                                 min={BASE_SKILLS[skill]} 
-                                                max={BASE_SKILLS[skill] + points + (skills[skill] - BASE_SKILLS[skill])}
+                                                max={BASE_SKILLS[skill] + INITIAL_SKILL_POINTS}
                                                 step={1} 
                                                 value={[skills[skill]]} 
                                                 onValueChange={(val) => handleSliderChange(skill, val)} 

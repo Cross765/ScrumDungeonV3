@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Users, Zap, Swords, Library, Mic, GitPullRequest, BrainCircuit } from 'lucide-react';
+import { NEXT_LEVEL_XP } from '@/lib/constants';
 
 const skillIcons: Record<SkillName, React.ReactNode> = {
     'Colaboración': <Users className="w-4 h-4 mr-2 text-primary" />,
@@ -17,7 +18,6 @@ const skillIcons: Record<SkillName, React.ReactNode> = {
 
 
 export default function CharacterSheet({ character }: { character: Character }) {
-  const nextLevelXp = 100;
 
   return (
     <Card className="sticky top-8 bg-card/80 backdrop-blur-sm">
@@ -30,8 +30,8 @@ export default function CharacterSheet({ character }: { character: Character }) 
       <CardContent className="space-y-6">
         <div>
             <h4 className="text-sm font-medium text-muted-foreground mb-2 text-center">Puntos de Experiencia (XP)</h4>
-            <Progress value={(character.xp / nextLevelXp) * 100} className="w-full" />
-            <p className="text-xs text-center mt-1 text-muted-foreground">{character.xp} / {nextLevelXp} XP</p>
+            <Progress value={(character.xp / NEXT_LEVEL_XP) * 100} className="w-full" />
+            <p className="text-xs text-center mt-1 text-muted-foreground">{character.xp} / {NEXT_LEVEL_XP} XP</p>
         </div>
         <Separator />
         <div>

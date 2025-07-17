@@ -2,6 +2,18 @@ import type { Skills, Role } from './types';
 
 export const INITIAL_SKILL_POINTS = 10;
 export const INITIAL_XP = 0;
+export const NEXT_LEVEL_XP = 100;
+export const POINTS_PER_LEVEL = 5;
+
+export const SKILLS = [
+  'Colaboración',
+  'Adaptabilidad',
+  'Comunicación',
+  'Resoluciones de impedimentos',
+  'Priorización',
+  'Velocidad de ejecución',
+  'Mentalidad ágil',
+] as const;
 
 export const BASE_SKILLS: Skills = {
   'Colaboración': 1,

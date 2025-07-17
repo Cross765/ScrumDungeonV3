@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState, useTransition } from 'react';
-import type { Character, StorySegment } from '@/lib/types';
+import React, { useState, useTransition, useEffect } from 'react';
+import type { Character, StorySegment, SkillName } from '@/lib/types';
 import { getNewStory } from '@/lib/actions';
 import CharacterSheet from './character-sheet';
 import StoryDisplay from './story-display';
 import ActionsPanel from './actions-panel';
 import DiceRoller from './dice-roller';
+import LevelUpDialog from './level-up-dialog';
 import { useToast } from '@/hooks/use-toast';
+import { SKILLS, NEXT_LEVEL_XP, POINTS_PER_LEVEL } from '@/lib/constants';
 
 interface GameUIProps {
     character: Character;
@@ -18,9 +20,28 @@ interface GameUIProps {
 
 export default function GameUI({ character, setCharacter, story, setStory }: GameUIProps) {
     const [isRolling, setIsRolling] = useState(false);
+    const [isLevelUp, setIsLevelUp] = useState(false);
+    const [availableSkillPoints, setAvailableSkillPoints] = useState(0);
+    const [isPending, startTransition] = useTransition();
     const { toast } = useToast();
+
+    useEffect(() => {
+        if (character && character.xp >= NEXT_LEVEL_XP) {
+            setIsLevelUp(true);
+            setAvailableSkillPoints(prev => prev + POINTS_PER_LEVEL);
+        }
+    }, [character?.xp]);
     
     const handleDecision = (decision: string) => {
+        if (isLevelUp) {
+            toast({
+                title: "¡Sube de nivel!",
+                description: "Debes asignar tus puntos de habilidad para continuar.",
+                variant: "destructive"
+            });
+            return;
+        }
+
         setIsRolling(true);
 
         const diceRollResult = Math.floor(Math.random() * 20) + 1;
@@ -85,11 +106,35 @@ export default function GameUI({ character, setCharacter, story, setStory }: Gam
         }, 1000); 
     };
 
+    const handleLevelUp = (updatedSkills: Record<SkillName, number>) => {
+        setCharacter(prev => {
+            if (!prev) return null;
+            return {
+                ...prev,
+                skills: updatedSkills,
+                xp: prev.xp - NEXT_LEVEL_XP
+            }
+        });
+        setIsLevelUp(false);
+        setAvailableSkillPoints(0); // Reset points after distribution
+        toast({
+            title: "¡Nivel alcanzado!",
+            description: "Tus habilidades han mejorado. ¡La aventura continúa!",
+        });
+    };
+
     const latestSegment = story[story.length - 1];
 
     return (
         <>
             <DiceRoller isRolling={isRolling} />
+            {isLevelUp && character && (
+                <LevelUpDialog
+                    character={character}
+                    pointsToDistribute={availableSkillPoints}
+                    onLevelUp={handleLevelUp}
+                />
+            )}
             <div className="grid md:grid-cols-3 gap-8 items-start">
                 <div className="md:col-span-2">
                     <StoryDisplay story={story} />
@@ -101,17 +146,4 @@ export default function GameUI({ character, setCharacter, story, setStory }: Gam
             </div>
         </>
     );
-}
-
-// Dummy startTransition for cases where React's useTransition is not available or needed.
-// This avoids breaking the app if the environment doesn't support it fully.
-let startTransition: React.TransitionStartFunction;
-// @ts-ignore
-if (React.startTransition) {
-  // @ts-ignore
-  startTransition = React.startTransition;
-} else {
-  startTransition = function (cb: () => void) {
-    cb();
-  };
 }
