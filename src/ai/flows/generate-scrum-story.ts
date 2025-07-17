@@ -31,7 +31,7 @@ const generateScrumStoryPrompt = ai.definePrompt({
   name: 'generateScrumStoryPrompt',
   input: {schema: GenerateScrumStoryInputSchema},
   output: {schema: GenerateScrumStoryOutputSchema},
-  prompt: `Eres un maestro de mazmorras experto en Scrum, narrando una historia en español. 
+  prompt: `Eres un maestro de mazmorras experto en Scrum, narrando una historia en español. Tu objetivo es crear una narrativa impredecible y emocionante.
 Basándote en la historia anterior, la decisión del jugador y el resultado del dado, genera el siguiente capítulo de la historia.
 
 Historia anterior:
@@ -43,8 +43,10 @@ Decisión del jugador:
 Resultado del dado:
 {{diceRollResult}}
 
-Genera un nuevo capítulo de la historia en español que continúe la narrativa de forma coherente y atractiva. La historia debe tener un máximo de 100 palabras.
-MUY IMPORTANTE: Después del párrafo de la historia, proporciona SIEMPRE tres opciones para que el jugador elija. Cada opción debe estar en una nueva línea y comenzar con un guion (-).`,
+El resultado del dado es CRUCIAL. Un resultado alto (15-20) debe llevar a un éxito notable, un giro positivo o una ventaja inesperada. Un resultado bajo (1-5) debe provocar un contratiempo, un problema o una consecuencia negativa. Un resultado medio (6-14) puede ser un éxito modesto, un resultado mixto o una situación neutral.
+
+Genera un nuevo capítulo de la historia en español que sea creativo, aleatorio y sorprendente, manteniendo la coherencia. La historia debe tener un máximo de 100 palabras.
+MUY IMPORTANTE: Después del párrafo de la historia, proporciona SIEMPRE tres opciones nuevas y distintas para que el jugador elija. Las opciones deben ser diversas y llevar a caminos diferentes. Cada opción debe estar en una nueva línea y comenzar con un guion (-).`,
 });
 
 const generateScrumStoryFlow = ai.defineFlow(
